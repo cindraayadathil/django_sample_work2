@@ -247,11 +247,9 @@ class SchoolWithBatch(APIView):
             batch_serializer = BatchSerializer(batch)
             students = Student.objects.filter(batch=batch)
             student_serializer = StudentSerializer(students, many=True)
-            
-            final_data.append({
-                'batch': batch_serializer.data,
-                'students': student_serializer.data,
-            })
+            batch_data =  batch_serializer.data
+            batch_data['student_data'] =student_serializer.data
+            final_data.append(batch_data)
         
         response_data = {
             'school': school_serializer.data,
