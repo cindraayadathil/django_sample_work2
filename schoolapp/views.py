@@ -231,7 +231,26 @@ def batch_put(request,batch_id):
             return Response(serializer.data,status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
+
+# display student  with batch 
+class BatchWithStudent(APIView):
+    def get(self, respect,student_id, format=None):
+        try:
+            student = Student.objects.get(id=student_id)
+        except Student.DoesNotExist:
+            return Response({'error': 'Category not found '}, status=status.HTTP_404_NOT_FOUND)
+        
+        student_serializer = StudentSerializer(student)
+        batch = Batch.objects.filter(student=student)
+        batch_serializer = BatchSerializer(batch, many=True)
+
+        response_data ={
+            'student': student_serializer.data,
+            'batch':batch_serializer.data,
+        }
+
+        return Response(response_data,status=status.HTTP_200_OK)
+
 class SchoolWithBatch(APIView):
     def get(self, request, school_id, format=None):
         try:

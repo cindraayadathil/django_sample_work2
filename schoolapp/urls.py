@@ -20,7 +20,8 @@ urlpatterns = [
     path('student/<int:student_id>/put/',student_put,name='student_put'),
     path('school/<int:school_id>/put/',school_put,name='school_put'),
     path('batch/<int:batch_id>/put/',batch_put,name='batch_put'),
-    path('school/<int:school_id>/batch/',SchoolWithBatch.as_view(),name='School-With-Batch'),
+    path('school/<int:school_id>/batch/',SchoolWithBatch.as_view(),name='School-With-Batch'),   
+    path('student/<int:student_id>/batch/',BatchWithStudent.as_view(),name='Batch-With-Student'),    
 
 
 ]
